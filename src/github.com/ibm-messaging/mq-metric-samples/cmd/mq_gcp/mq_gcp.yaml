@@ -1,0 +1,60 @@
+#
+# This is the section of the configuration file
+# that is common for all collectors. It gets combined
+# with the collector-specific portion to create the real
+# configuration file.
+
+global:
+  useObjectStatus: true
+  useResetQStats: false
+  logLevel: INFO 
+  metaprefix: ""
+  pollInterval: 60s
+  rediscoverInterval: 1h
+  tzOffset: 0h
+
+connection:
+    queueManager: QM1
+
+# You can point at a CCDT here
+    ccdtUrl:
+# Or for simple client configurations, set the connName and channel
+    connName:
+    channel:
+# If none of the channel-related attributes are set, then this can
+# be set to true to force client connectivity and the usual environment
+# variables such as MQSERVER are used.
+    clientConnection: false
+
+# If a user is set, then a password must be passed somehow. It can
+# be done in this file, on a command line, or (better) passed via stdin
+#    user: mqadmin
+#    password: passw0rd                                             
+    replyQueue: SYSTEM.DEFAULT.MODEL.QUEUE
+
+objects:
+    queues:
+    - TEST*
+    - "!SYSTEM.*"
+    - "!AMQ.*"
+    - QM*
+    queueSubscriptionSelector:
+    - PUT
+    - GET
+    channels:
+    - SYSTEM.*
+    - TO.*
+    topics:
+    subscriptions:
+    showInactiveChannels: false
+
+
+# This is the collector-specific portion of the configuration
+collectd:
+  interval: 60s
+  hostname: localhost
+
+# This is gcp specific configuration
+gcp:
+ projectId: rmg-npd-etp-bigmq
+ zone: europe-west1-b  
