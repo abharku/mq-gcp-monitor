@@ -95,10 +95,10 @@ func main() {
 	// This program runs forever, or at least until killed by
 	// collectd
 	if err == nil {
-		for {
-			Collect()
-			time.Sleep(d)
-		}
+		
+		Collect()
+			
+		
 
 	}
 
